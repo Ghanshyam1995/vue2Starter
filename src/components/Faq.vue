@@ -29,7 +29,7 @@ import axios from 'axios';
             errors:[]
         }),
         created(){
-            axios.get('http://jsonplaceholder.typicode.com/posts')
+            axios.get('http://localhost:3000/GetUsers')
               .then(response => {
                   this.faqs = response.data.slice(0,10);
               })
