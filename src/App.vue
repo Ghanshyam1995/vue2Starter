@@ -1,4 +1,5 @@
 <template>
+
   <div id="app">
      <div class="nav has-shadow">
       <div class="container">
@@ -34,9 +35,9 @@
         </div>
       </div>
     </div>
-
+   <test></test>
     <router-view></router-view>
-
+ 
     <footer class="footer is-primary">
       <div class="container">
         <div class="columns">
@@ -49,13 +50,17 @@
           </div>
         </div>
       </div>
+     
     </footer>
   </div>
+   
 </template>
 
 <script>
+import test from './components/Test'
 export default {
   name: 'app',
+  components:{test},
   data:function(){
     return {
       isActive:false
