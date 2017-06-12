@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import home from '@/components/Home'
 import faq from '@/components/Faq'
 import login from '@/components/Login'
+import dashboard from "@/components/Dashboard"
 Vue.use(Router)
 Router.RouterMode = "history"
 export default new Router({
@@ -20,5 +21,9 @@ export default new Router({
         path: '/login',
         name: 'login',
         component: login
+    }, {
+        path: '/dashboard',
+        name: 'dashboard',
+        component: dashboard
     }]
 })
