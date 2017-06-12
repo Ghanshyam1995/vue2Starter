@@ -6,19 +6,14 @@ const config = {
     password: 'ghanshyam1995',
     server: 'localhost', // You can use 'localhost\\instance' to connect to named instance 
     database: 'SBAdmin3',
-
-
 }
-router.get('/Login', function(req, res, next) {
-
-});
+router.get('/Login', function(req, res, next) {});
 router.post('/Login', (req, res) => {
     sql.connect(config, err => {
         const request = new sql.Request();
         request.query("SELECT * From Users", (err, result) => {
             sql.close();
             res.json(result.recordset);
-
         })
     })
 

@@ -38,11 +38,13 @@
 <div class="field">
    <label class="label">Gender</label>
    <p class="control">
+     <span class="select">
      <select v-model="User.Gender">
        <option value="">-Select-</option>
        <option value="Male">Male</option>
        <option value="Female">Female</option>
      </select>
+     </span>
    </p>
 </div>
   <button @click.prevent="Login" class="button is-success is-outlined">Login</button>

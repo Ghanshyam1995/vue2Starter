@@ -17,7 +17,7 @@
 
           <router-link to="/" class="nav-item r-item">Home</router-link>
           <router-link to="faq" class="nav-item r-item">Features</router-link>
-          <router-link to="faq" class="nav-item r-item">About</router-link>
+          <router-link to="dashboard" class="nav-item r-item">Dashboard</router-link>
           <router-link to="faq" class="nav-item r-item">FAQ</router-link>
 
           <div class="nav-item">
@@ -35,6 +35,7 @@
         </div>
       </div>
     </div>
+  
 
   <br>
     <router-view></router-view>
@@ -70,7 +71,10 @@ export default {
   methods:{
     toggleNav:function(){
       this.isActive=!this.isActive;
-    }
+    },
+    handleScroll:function(e){
+      console.log(e);
+     }
   }
 }
 </script>
@@ -106,5 +110,7 @@ footer
     color: #fff
     margin-left: 20px
 
+.is-active
+    color:aqua
 
 </style>

@@ -21,22 +21,13 @@
 </template>
 
 <script>
-import axios from 'axios';
     export default{
         name:'faq',
         data:()=>({
             faqs:[],
             errors:[]
         }),
-        created(){
-            axios.get('http://localhost:3000/GetUsers')
-              .then(response => {
-                  this.faqs = response.data.slice(0,10);
-              })
-               .catch(e => {
-                 this.errors.push(e)
-             })
-        }
+       
     }
 
 </script>
