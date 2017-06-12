@@ -1,5 +1,6 @@
 <template>
      <div id="login">
+       <form>
        <div class="column is-6 is-offset-3">
            <div class="card ">
   <header class="card-header">
@@ -17,32 +18,64 @@
           <div class="field">
   <label class="label">Email</label>
   <p class="control">
-    <input class="input" type="text" placeholder="Email">
+    <input class="input" v-model.lazy="User.Email" type="text" placeholder="Email">
   </p>
 </div>
 
 <div class="field">
    <label class="label">Password</label>
       <p class="control">
-      <input class="input" type="password" placeholder="Password">
+      <input class="input" type="password" v-model="User.Password" placeholder="Password">
      </p>
+  
 </div>
-
-  <button class="button is-success is-outlined">Login</button>
+<div  class="field">
+   <label class="label">Remember me?</label>
+   <p class="control">
+     <input type="checkbox" value=true v-model="User.RememberMe"/>
+   </p>
+</div>
+<div class="field">
+   <label class="label">Gender</label>
+   <p class="control">
+     <select v-model="User.Gender">
+       <option value="">-Select-</option>
+       <option value="Male">Male</option>
+       <option value="Female">Female</option>
+     </select>
+   </p>
+</div>
+  <button @click.prevent="Login" class="button is-success is-outlined">Login</button>
     </div>
   </div>
- 
+   {{User.Gender}}
 </div>
      </div>
+    
+       </form>
      </div>
 
-   
+
 </template>
 
 <script>
-
+     import axios from 'axios';
     export default{
-        name:'login'
+ 
+        name:'login',
+        data:()=>{
+           return{
+                  User:{
+                    Email :'',
+                    Password :'',
+                    RememberMe:'',
+                    Gender:''
+                  }
+           }
+        },
+        methods:{
+         
+        }
     }
 </script>
 

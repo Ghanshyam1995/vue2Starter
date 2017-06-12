@@ -1,6 +1,7 @@
 <template>
     <div id="test">
          <div class="tabs is-centered">
+        
   <ul>
     <li class="is-active">
       <a>

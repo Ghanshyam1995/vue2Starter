@@ -35,7 +35,8 @@
         </div>
       </div>
     </div>
-   <test></test>
+
+  <br>
     <router-view></router-view>
  
     <footer class="footer is-primary">
