@@ -33,11 +33,6 @@
                 Users:[]
             }),
        
-         created(){
-            this.$http.post("http://localhost:3000/account/Login",{User :this.User}).then((data)=>{
-              this.Users=data.body;
-            })  
-         }
      }
     
 </script>

@@ -18,39 +18,22 @@
           <div class="field">
   <label class="label">Email</label>
   <p class="control">
-    <input class="input" v-model.lazy="User.Email" type="text" placeholder="Email">
+    <input class="input"  v-model.lazy="User.Email" type="text" placeholder="Email">
   </p>
 </div>
 
 <div class="field">
    <label class="label">Password</label>
       <p class="control">
-      <input class="input" type="password" v-model="User.Password" placeholder="Password">
+      <input class="input"  type="password" v-model="User.Password" placeholder="Password">
      </p>
   
 </div>
-<div  class="field">
-   <label class="label">Remember me?</label>
-   <p class="control">
-     <input type="checkbox" value=true v-model="User.RememberMe"/>
-   </p>
-</div>
-<div class="field">
-   <label class="label">Gender</label>
-   <p class="control">
-     <span class="select">
-     <select v-model="User.Gender">
-       <option value="">-Select-</option>
-       <option value="Male">Male</option>
-       <option value="Female">Female</option>
-     </select>
-     </span>
-   </p>
-</div>
-  <button @click.prevent="Login" class="button is-success is-outlined">Login</button>
+
+  <button @click.prevent="Login" v-ripple="'rgba(100, 50, 100, 0.2)'" class="button">Login</button>
     </div>
   </div>
-   {{User.Gender}}
+  
 </div>
      </div>
     
@@ -61,7 +44,8 @@
 </template>
 
 <script>
-     import axios from 'axios';
+    import VueNotifications from 'vue-notifications'
+
     export default{
  
         name:'login',
@@ -75,8 +59,23 @@
                   }
            }
         },
+       
         methods:{
-         
+         Login()
+         {
+                  this.$http.post("http://localhost:3000/account/Login",{User : this.User})
+                  .then(res=>{
+                    debugger;
+                    if(res.status=200 && res.body[0]!=null)
+                    {
+                      VueNotifications.success({message:"Redirecting ! Please wait...."})
+                      localStorage.setItem("user_token",JSON.stringify(res.body[0]));
+                      this.$router.push('/dashboard');
+                    }
+                    else{
+                         VueNotifications.error({message:"Login failed ! Invalid credential provided"})}
+                  })
+         }
         }
     }
 </script>

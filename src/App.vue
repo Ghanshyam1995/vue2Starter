@@ -1,7 +1,8 @@
 <template>
-
-  <div id="app">
-     <div class="nav has-shadow">
+     
+  <div id="app" >
+    <top-progress ref="topProgress"></top-progress>
+     <div class="nav is-light">
       <div class="container">
         <div class="nav-left">
           <a class="nav-item"><img src="https://vuejs.org/images/logo.png"/></a>
@@ -15,12 +16,20 @@
 
         <div class="nav-right nav-menu" v-bind:class="{ 'is-active': isActive }">
 
-          <router-link to="/" class="nav-item r-item">Home</router-link>
-          <router-link to="faq" class="nav-item r-item">Features</router-link>
-          <router-link to="dashboard" class="nav-item r-item">Dashboard</router-link>
-          <router-link to="faq" class="nav-item r-item">FAQ</router-link>
-
-          <div class="nav-item">
+          <router-link v-ripple.mouseover="'rgba(100,50,100,0.9)'" to="/" class="nav-item r-item"><i class="fa fa-home"></i>Home</router-link>
+          <router-link v-ripple.mouseover="'rgba(100,50,100,0.9)'" to="faq" class="nav-item r-item"><i class="fa fa-file"></i>Features</router-link>
+          <router-link v-ripple.mouseover="'rgba(100,50,100,0.9)'" to="dashboard" class="nav-item r-item"><i class="fa fa-dashcube"></i>Dashboard</router-link>
+          <router-link v-ripple.mouseover="'rgba(100,50,100,0.9)'" to="faq" class="nav-item r-item"><i class="fa fa-quora"></i>Faq</router-link>
+        
+          <a @click.prevent="Logout" v-if="LoggedIn" v-ripple.mouseover="'rgba(200,50,100,0.9)'" class="nav-item r-item dropLink" ><i class="fa fa-user"></i> {{Username}}
+            <div class="dropMenu">
+               <a href="#">Link 1</a>
+               <a href="#">Link 2</a>
+               <a href="#">Link 3</a>
+            </div>
+          </a>
+         
+          <div class="nav-item" v-if="!LoggedIn">
             <p class="control">
             <router-link to="login" class="button is-primary is-outlined">
             <span class="icon">
@@ -39,8 +48,7 @@
 
   <br>
     <router-view></router-view>
- 
-    <footer class="footer is-primary">
+    <footer class="footer is-secondary">
       <div class="container">
         <div class="columns">
           <div class="column">
@@ -57,33 +65,52 @@
   </div>
    
 </template>
-
+    
 <script>
+import {isLoggedIn,Logout,Username} from "./service"
 import test from './components/Test'
+import miniToastr from 'mini-toastr'
+import topProgress from 'vue-top-progress'
 export default {
   name: 'app',
-  components:{test},
+  components:{test,topProgress},
   data:function(){
     return {
-      isActive:false
+      isActive:false,
+      LoggedIn:false,
+      Username:''
     }
+  },
+  created(){
+    
+    this.LoggedIn=isLoggedIn();
+    
+    this.Username=Username()
+  },
+  mounted(){
+     miniToastr.init()
+     this.$refs.topProgress.start()
+      setTimeout(() => {
+      this.$refs.topProgress.done()
+    }, 2000)
   },
   methods:{
     toggleNav:function(){
       this.isActive=!this.isActive;
     },
-    handleScroll:function(e){
-      console.log(e);
-     }
+     Logout:function(){
+       
+        Logout()
+    },
+   
   }
 }
 </script>
-
 <style lang="sass">
 @import '../node_modules/bulma/bulma.sass'
 @import 'mq'
 .nav
-  background-color: #383838
+  
   a:hover
     color: gray
 
@@ -113,4 +140,6 @@ footer
 .is-active
     color:aqua
 
+.dropLink.dropMenu
+   display:none
 </style>
