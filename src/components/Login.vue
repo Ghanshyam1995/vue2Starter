@@ -45,7 +45,7 @@
 
 <script>
     import VueNotifications from 'vue-notifications'
-
+   import Login from "../service"
     export default{
  
         name:'login',
@@ -65,12 +65,11 @@
          {
                   this.$http.post("http://localhost:3000/account/Login",{User : this.User})
                   .then(res=>{
-                    debugger;
-                    if(res.status=200 && res.body[0]!=null)
+                 if(res.status=200 && res.body[0]!=null)
                     {
                       VueNotifications.success({message:"Redirecting ! Please wait...."})
-                      localStorage.setItem("user_token",JSON.stringify(res.body[0]));
-                      this.$router.push('/dashboard');
+                     localStorage.setItem('authUser',JSON.stringify(res.body[0]));
+                      this.$router.push('/home');
                     }
                     else{
                          VueNotifications.error({message:"Login failed ! Invalid credential provided"})}

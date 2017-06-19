@@ -1,8 +1,8 @@
 <template>
      
-  <div id="app" >
+  <div id="app" @keyup.esc="isActive=false">
     <top-progress ref="topProgress"></top-progress>
-     <div class="nav is-light">
+     <div class="nav is-light is-fixed-top">
       <div class="container">
         <div class="nav-left">
           <a class="nav-item"><img src="https://vuejs.org/images/logo.png"/></a>
@@ -16,19 +16,11 @@
 
         <div class="nav-right nav-menu" v-bind:class="{ 'is-active': isActive }">
 
-          <router-link v-ripple.mouseover="'rgba(100,50,100,0.9)'" to="/" class="nav-item r-item"><i class="fa fa-home"></i>Home</router-link>
-          <router-link v-ripple.mouseover="'rgba(100,50,100,0.9)'" to="faq" class="nav-item r-item"><i class="fa fa-file"></i>Features</router-link>
-          <router-link v-ripple.mouseover="'rgba(100,50,100,0.9)'" to="dashboard" class="nav-item r-item"><i class="fa fa-dashcube"></i>Dashboard</router-link>
-          <router-link v-ripple.mouseover="'rgba(100,50,100,0.9)'" to="faq" class="nav-item r-item"><i class="fa fa-quora"></i>Faq</router-link>
-        
-          <a @click.prevent="Logout" v-if="LoggedIn" v-ripple.mouseover="'rgba(200,50,100,0.9)'" class="nav-item r-item dropLink" ><i class="fa fa-user"></i> {{Username}}
-            <div class="dropMenu">
-               <a href="#">Link 1</a>
-               <a href="#">Link 2</a>
-               <a href="#">Link 3</a>
-            </div>
-          </a>
-         
+          <router-link v-ripple to="/" class="nav-item r-item"><i class="fa fa-home"></i>Home</router-link>
+          <router-link  v-ripple to="faq" class="nav-item r-item"><i class="fa fa-file"></i>Features</router-link>
+          <router-link v-ripple  to="dashboard" class="nav-item r-item"><i class="fa fa-dashcube"></i>Dashboard</router-link>
+          <router-link v-ripple to="faq" class="nav-item r-item"><i class="fa fa-quora"></i>Faq</router-link>
+          <a class="nav-item r-item" v-if="LoggedIn"  @click.prevent="Logout"><i class="fa fa-sign-out"></i>Logout</a>
           <div class="nav-item" v-if="!LoggedIn">
             <p class="control">
             <router-link to="login" class="button is-primary is-outlined">
@@ -39,6 +31,7 @@
                </router-link>
               
             </p>
+            
           </div>
 
         </div>
@@ -48,6 +41,42 @@
 
   <br>
     <router-view></router-view>
+
+    <!--<button class="button is-info is-outlined" @click="Test">Open Model</button>-->
+    <div class="modal" :class="{'is-active':isActive}">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+       <div class="card">
+  <div class="card-image">
+    <figure class="image is-4by3">
+      <img src="http://bulma.io/images/placeholders/1280x960.png" alt="Image">
+    </figure>
+  </div>
+  <div class="card-content">
+    <div class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+          <img src="http://bulma.io/images/placeholders/96x96.png" alt="Image">
+        </figure>
+      </div>
+      <div class="media-content">
+        <p class="title is-4">John Smith</p>
+        <p class="subtitle is-6">@johnsmith</p>
+      </div>
+    </div>
+
+    <div class="content">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+      <a>#css</a> <a>#responsive</a>
+      <br>
+      <small>11:09 PM - 1 Jan 2016</small>
+    </div>
+  </div>
+</div>
+  </div>
+  <button class="modal-close" @click="isActive=false"></button>
+</div>
     <footer class="footer is-secondary">
       <div class="container">
         <div class="columns">
@@ -67,25 +96,22 @@
 </template>
     
 <script>
-import {isLoggedIn,Logout,Username} from "./service"
-import test from './components/Test'
+import {isLoggedIn,Logout} from "./service"
 import miniToastr from 'mini-toastr'
 import topProgress from 'vue-top-progress'
 export default {
   name: 'app',
-  components:{test,topProgress},
+  components:{topProgress},
   data:function(){
     return {
       isActive:false,
       LoggedIn:false,
-      Username:''
+      
     }
   },
+ 
   created(){
-    
     this.LoggedIn=isLoggedIn();
-    
-    this.Username=Username()
   },
   mounted(){
      miniToastr.init()
@@ -94,14 +120,21 @@ export default {
       this.$refs.topProgress.done()
     }, 2000)
   },
+  watch:{
+    
+  },
   methods:{
     toggleNav:function(){
       this.isActive=!this.isActive;
     },
      Logout:function(){
-       
-        Logout()
+        Logout();
+        this.$router.push("login");
+        this.LoggedIn=false;
     },
+    Test:function(){
+        this.isActive=true;
+    }
    
   }
 }

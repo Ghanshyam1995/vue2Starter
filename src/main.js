@@ -6,7 +6,7 @@ import miniToastr from 'mini-toastr'
 import Ripple from 'vue-ripple-directive'
 import App from './App'
 import router from './router'
-import test from './components/Test'
+
 import VueResource from 'vue-resource'
 const toastTypes = {
     success: 'success',
@@ -14,6 +14,21 @@ const toastTypes = {
     info: 'info',
     warn: 'warn'
 }
+router.beforeEach((to, from, next) => {
+    const authUser = localStorage.getItem("authUser");
+    if (to.meta.requireAuth) {
+        if (authUser)
+            next();
+        else
+            next({ name: 'login' })
+    } else {
+        if (authUser)
+            next({ name: 'home' });
+        else
+            next();
+    }
+});
+
 miniToastr.init({ types: toastTypes })
 
 function toast({ title, message, type, timeout, cb }) {
@@ -25,16 +40,16 @@ const options = {
     info: toast,
     warn: toast
 }
+
 VueNotifications.config.timeout = 5000
 Vue.use(VueNotifications, options)
 Vue.directive('ripple', Ripple)
 
 Vue.use(VueResource)
 Vue.config.productionTip = false
-Vue.component('test', [test])
+
 new Vue({
     el: '#app',
-
     router,
     render: h => h(App)
 }).$mount("#app");

@@ -32,10 +32,19 @@
             data:()=>({
                 Users:[]
             }),
+            mounted()
+            {
+                 this.$http.get("http://localhost:3000/account/Users").then(res=>{
+                        this.Users=res.body;
+                 });
+            }
        
      }
     
 </script>
-<style lang="sass">
+<style>
 
+tr td{
+    cursor: pointer;
+}
 </style>

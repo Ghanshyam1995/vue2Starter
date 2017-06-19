@@ -8,7 +8,9 @@ const config = {
     database: 'SBAdmin3',
 }
 
-router.get('/Login', function(req, res, next) {});
+router.get('/Login', function(req, res, next) {
+
+});
 router.post('/Login', (req, res) => {
     sql.connect(config, err => {
         const request = new sql.Request();
@@ -24,6 +26,20 @@ router.post('/Login', (req, res) => {
 
     })
 
+});
+
+router.get("/Users", (req, res) => {
+    sql.connect(config, err => {
+        const request = new sql.Request();
+        request.query("SELECT * From Users", (err, record) => {
+            sql.close();
+            if (err)
+                res.json(err);
+            else {
+                res.json(record.recordset);
+            }
+        })
+    })
 });
 
 

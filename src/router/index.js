@@ -11,19 +11,24 @@ export default new Router({
     routes: [{
         path: '/',
         name: 'home',
-        component: home
+        component: home,
+        meta: { requireAuth: true }
     }, {
         path: '/faq',
         name: 'faq',
-        component: faq
+        component: faq,
+        meta: { requireAuth: true }
     }, {
 
         path: '/login',
         name: 'login',
         component: login
+
     }, {
         path: '/dashboard',
         name: 'dashboard',
-        component: dashboard
+        component: dashboard,
+        meta: { requireAuth: true }
     }]
+
 })
